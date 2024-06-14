@@ -16,6 +16,8 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
 } from "@/components/ui/dropdown-menu";
+import { Input } from "@/components/ui/input";
+import { Tabs, TabsList, TabsTrigger, TabsContent } from "@/components/ui/tabs";
 
 export {
   Button,
@@ -35,4 +37,9 @@ export {
   DropdownMenuSubContent,
   DropdownMenuSubTrigger,
   DropdownMenuRadioGroup,
+  Input,
+  Tabs,
+  TabsList,
+  TabsTrigger,
+  TabsContent,
 };

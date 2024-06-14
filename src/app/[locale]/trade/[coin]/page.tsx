@@ -1,3 +1,5 @@
+import Market from "@/components/market/market";
+
 export default function Page({
   params,
 }: {
@@ -6,5 +8,9 @@ export default function Page({
     coin: string;
   };
 }) {
-  return <div>Trade</div>;
+  return (
+    <div className="bg-background">
+      <Market />
+    </div>
+  );
 }

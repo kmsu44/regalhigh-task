@@ -10,5 +10,14 @@
     "language": "언어",
     "log_in": "로그인",
     "sign_up": "회원가입"
+  },
+  "market": {
+    "pair": "페어",
+    "price": "가격",
+    "change": "전일대비",
+    "volume": "거래량"
+  },
+  "common": {
+    "search": "검색"
   }
 }

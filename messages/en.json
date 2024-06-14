@@ -8,9 +8,14 @@
     "square": "Square",
     "more": "More",
     "language": "Language",
-    "currency": "Currency",
     "log_in": "Log in",
     "sign_up": "Sign up"
+  },
+  "market": {
+    "pair": "Pair",
+    "price": "Price",
+    "change": "Change",
+    "volume": "Volume"
   },
   "common": {
     "search": "Search"
