@@ -3,6 +3,7 @@
 import { useTheme } from "next-themes";
 import { Moon, Sun } from "lucide-react";
 import { useEffect, useState } from "react";
+import { Button } from "@/components/ui";
 
 export default function ThemeSwitch() {
   const { theme, setTheme } = useTheme();
@@ -15,13 +16,14 @@ export default function ThemeSwitch() {
   const [mounted, setMounted] = useState(false);
   useEffect(() => setMounted(true), []);
   if (!mounted) return null;
+
   return (
-    <button onClick={toggleTheme} className="text-textPrimary">
+    <Button onClick={toggleTheme} size="icon" variant="outline">
       {theme === "light" ? (
         <Moon className="h-[24px] w-[24px]" />
       ) : (
         <Sun className="h-[24px] w-[24px]" />
       )}
-    </button>
+    </Button>
   );
 }

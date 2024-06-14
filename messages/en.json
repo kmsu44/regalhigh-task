@@ -1,5 +1,18 @@
 {
-  "Index": {
-    "title": "Hello"
+  "header": {
+    "buy_crypto": "Buy Crypto",
+    "markets": "Markets",
+    "trade": "Trade",
+    "futures": "Futures",
+    "earn": "Earn",
+    "square": "Square",
+    "more": "More",
+    "language": "Language",
+    "currency": "Currency",
+    "log_in": "Log in",
+    "sign_up": "Sign up"
+  },
+  "common": {
+    "search": "Search"
   }
 }

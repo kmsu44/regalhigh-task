@@ -1,5 +1,14 @@
 {
-  "Index": {
-    "title": "안녕"
+  "header": {
+    "buy_crypto": "암호화폐 구매",
+    "markets": "시장",
+    "trade": "거래",
+    "futures": "선물",
+    "earn": "수익",
+    "square": "커뮤니티",
+    "more": "더 보기",
+    "language": "언어",
+    "log_in": "로그인",
+    "sign_up": "회원가입"
   }
 }
