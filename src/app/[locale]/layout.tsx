@@ -5,6 +5,7 @@ import Header from "@/components/header";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
+import RecoilRootWrapper from "@/components/recoil-wrapper";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -24,12 +25,14 @@ export default async function RootLayout({
     <html lang={locale}>
       <head />
       <body className={inter.className}>
-        <NextIntlClientProvider messages={messages}>
-          <ThemeProvider attribute="class" defaultTheme="system">
-            <Header />
-            {children}
-          </ThemeProvider>
-        </NextIntlClientProvider>
+        <RecoilRootWrapper>
+          <NextIntlClientProvider messages={messages}>
+            <ThemeProvider attribute="class" defaultTheme="system">
+              <Header />
+              {children}
+            </ThemeProvider>
+          </NextIntlClientProvider>
+        </RecoilRootWrapper>
       </body>
     </html>
   );
