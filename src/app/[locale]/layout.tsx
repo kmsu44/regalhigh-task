@@ -6,6 +6,7 @@ import { ThemeProvider } from "@/components/theme/theme-provider";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import RecoilRootWrapper from "@/components/recoil-wrapper";
+import ReactQueryProviders from "@/components/react-query-providers";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -22,17 +23,19 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   return (
-    <html lang={locale}>
+    <html lang={locale} suppressHydrationWarning>
       <head />
       <body className={inter.className}>
-        <RecoilRootWrapper>
-          <NextIntlClientProvider messages={messages}>
-            <ThemeProvider attribute="class" defaultTheme="system">
-              <Header />
-              {children}
-            </ThemeProvider>
-          </NextIntlClientProvider>
-        </RecoilRootWrapper>
+        <ReactQueryProviders>
+          <RecoilRootWrapper>
+            <NextIntlClientProvider messages={messages}>
+              <ThemeProvider attribute="class" defaultTheme="system">
+                <Header />
+                {children}
+              </ThemeProvider>
+            </NextIntlClientProvider>
+          </RecoilRootWrapper>
+        </ReactQueryProviders>
       </body>
     </html>
   );
