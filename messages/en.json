@@ -17,5 +17,11 @@
     "change": "Change",
     "volume": "Volume",
     "search": "Search"
+  },
+  "info": {
+    "24h_change": "24H Change",
+    "24h_high": "24H High",
+    "24h_low": "24H Low",
+    "24h_volume": "24H Volume"
   }
 }

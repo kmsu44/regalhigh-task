@@ -3,11 +3,9 @@ import { Spot } from "@binance/connector-typescript";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const client = new Spot("", "", { baseURL: BASE_URL });
 
-export async function getTickers(symbol?: string) {
-  const options = {
-    symbol: symbol,
-  };
-  return client.ticker24hr(options);
+export async function getTickers() {
+  const data = (await client.ticker24hr()) as Ticker[];
+  return data;
 }
 
 export async function getSymbols() {

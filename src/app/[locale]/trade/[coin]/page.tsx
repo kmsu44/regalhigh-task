@@ -13,14 +13,13 @@ export default function Page({
   };
 }) {
   const queryClient = getQueryClient();
-
   void queryClient.prefetchQuery(symbolsOptions);
   void queryClient.prefetchQuery(tickersOptions);
   return (
-    <div className="flex bg-background">
+    <div className="flex bg-background w-full">
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <CoinInfo />
-        <div className="h-[357px] max-w-80">
+        <CoinInfo symbol={params.coin} />
+        <div className="h-[357px] max-w-80 flex-shrink-0">
           <Market />
           <div>트레이드</div>
         </div>
