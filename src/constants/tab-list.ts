@@ -12,6 +12,10 @@ export const MARKET_TAB_LIST = [
     value: "FDUSD",
   },
   {
+    name: "USDC",
+    value: "USDC",
+  },
+  {
     name: "TUSD",
     value: "TUSD",
   },
