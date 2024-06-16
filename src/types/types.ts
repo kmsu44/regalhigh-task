@@ -46,3 +46,25 @@ interface TickerPayload {
   L: number; // Last trade Id
   n: number; // Total number of trades
 }
+
+interface ExchangeInfo {
+  symbol: string;
+  status: string;
+  baseAsset: string;
+  baseAssetPrecision: number;
+  quoteAsset: string;
+  quoteAssetPrecision: number;
+  baseCommissionPrecision: number;
+  quoteCommissionPrecision: number;
+  orderTypes: string[];
+  icebergAllowed: boolean;
+  ocoAllowed: boolean;
+  quoteOrderQtyMarketAllowed: boolean;
+  allowTrailingStop: boolean;
+  isSpotTradingAllowed: boolean;
+  isMarginTradingAllowed: boolean;
+  permissions: string[];
+  defaultSelfTradePreventionMode: string;
+  allowedSelfTradePreventionModes: string[];
+  ticker?: Ticker;
+}

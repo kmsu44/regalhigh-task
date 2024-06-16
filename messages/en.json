@@ -15,9 +15,7 @@
     "pair": "Pair",
     "price": "Price",
     "change": "Change",
-    "volume": "Volume"
-  },
-  "common": {
+    "volume": "Volume",
     "search": "Search"
   }
 }

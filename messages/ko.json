@@ -15,9 +15,7 @@
     "pair": "페어",
     "price": "가격",
     "change": "전일대비",
-    "volume": "거래량"
-  },
-  "common": {
+    "volume": "거래량",
     "search": "검색"
   }
 }
