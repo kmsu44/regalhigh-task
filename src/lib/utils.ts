@@ -5,8 +5,8 @@ export function cn(...inputs: ClassValue[]) {
   return twMerge(clsx(inputs));
 }
 export function convertMillion(value: number) {
-  return value > 10_000_000
-    ? (value / 10_000_000).toFixed(2) + "M"
+  return value > 1_000_000
+    ? (value / 1_000_000).toFixed(2) + "M"
     : value.toFixed(2);
 }
 
@@ -81,7 +81,19 @@ export function getTableData({
   }
   return data;
 }
-export function formatNumberWithCommas(value: number) {
-  if (value < 1) return value;
-  return value.toString().replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+export function formatNumberWithCommas(value: number | string) {
+  if (typeof value === "string") {
+    value = parseFloat(value);
+  }
+  if (typeof value !== "number" || isNaN(value)) {
+    return "0";
+  }
+  const fixedValue = value.toFixed(8);
+  const parts = fixedValue.split(".");
+  parts[0] = parts[0].replace(/\B(?=(\d{3})+(?!\d))/g, ",");
+  parts[1] = parts[1].replace(/0+$/, "");
+  if (parts[1].length === 0) {
+    return parts[0];
+  }
+  return parts.join(".");
 }
