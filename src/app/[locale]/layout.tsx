@@ -1,12 +1,12 @@
-import type { Metadata } from "next";
 import { Inter } from "next/font/google";
-import "../globals.css";
-import Header from "@/components/header";
-import { ThemeProvider } from "@/components/theme/theme-provider";
+import type { Metadata } from "next";
 import { getMessages } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import RecoilRootWrapper from "@/components/recoil-wrapper";
-import ReactQueryProviders from "@/components/react-query-providers";
+import "../globals.css";
+import Header from "@/components/header";
+import ReactQueryProviders from "@/providers/react-query-providers";
+import RecoilRootWrapper from "@/providers/recoil-wrapper";
+import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
 
