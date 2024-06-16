@@ -93,7 +93,9 @@ export default function Market() {
 
         <div className="flex items-center">
           <div className="w-[120px] flex items-center justify-start gap-1">
-            <p className="text-sm font-semibold text-primary text-left">Pair</p>
+            <p className="text-sm font-semibold text-primary text-left">
+              {t("pair")}
+            </p>
             <ArrowUpDown
               className="w-3 h-3 cursor-pointer"
               onClick={() => handleSort("pair")}
@@ -101,7 +103,7 @@ export default function Market() {
           </div>
           <div className="w-[70px] flex items-center justify-end gap-1">
             <p className="text-sm font-semibold text-primary text-right">
-              Price
+              {t("price")}
             </p>
             <ArrowUpDown
               className="w-3 h-3 cursor-pointer"
@@ -110,7 +112,7 @@ export default function Market() {
           </div>
           <div className="flex items-center w-[120px] justify-end">
             <p className="text-sm font-semibold text-primary">
-              {radio === "change" ? "Change" : "Volume"}
+              {radio === "change" ? t("change") : t("volume")}
             </p>
             <ArrowUpDown
               className="w-3 h-3 cursor-pointer"
