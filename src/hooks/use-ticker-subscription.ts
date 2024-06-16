@@ -42,7 +42,14 @@ export default function useTickerSubscription() {
           oldData.map((ticker) => [ticker.symbol, ticker])
         );
         newData.forEach((ticker: Ticker) => {
-          tickersMap.set(ticker.symbol, ticker);
+          const lastPrice = tickersMap.get(ticker.symbol)?.lastPrice;
+          let isRise = lastPrice
+            ? parseFloat(lastPrice) < parseFloat(ticker.lastPrice)
+            : null;
+          tickersMap.set(ticker.symbol, {
+            ...ticker,
+            isRise,
+          });
         });
         return Array.from(tickersMap.values());
       });

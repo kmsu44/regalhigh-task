@@ -19,6 +19,7 @@ interface Ticker {
   lastId: number;
   count: number;
   eventTime?: number;
+  isRise?: boolean | null;
 }
 
 interface TickerPayload {
@@ -67,4 +68,17 @@ interface ExchangeInfo {
   defaultSelfTradePreventionMode: string;
   allowedSelfTradePreventionModes: string[];
   ticker?: Ticker;
+}
+
+interface SortValue {
+  sortValue: "price" | "change" | "volume" | "pair";
+  sortDirection: "asc" | "desc";
+}
+interface MarketTable {
+  symbol: string;
+  pair: string;
+  price: number;
+  priceChange: number;
+  volume: number;
+  isRise?: boolean | null;
 }
