@@ -1,7 +1,7 @@
 import clsx from "clsx";
 import { Star } from "lucide-react";
 import { useTranslations } from "next-intl";
-import { useFavoritesState } from "@/atoms/market/favorites";
+import { useFavoritesState } from "@/atoms/market/favorites-atom";
 import { Button } from "@/components/ui";
 import useConvertUsd from "@/hooks/use-convert-usd";
 import { formatNumberWithCommas, formatPriceBySymbol } from "@/lib/utils";

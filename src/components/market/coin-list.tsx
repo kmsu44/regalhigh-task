@@ -4,7 +4,7 @@ import { usePathname } from "next/navigation";
 import Link from "next/link";
 import clsx from "clsx";
 import { FixedSizeList as List } from "react-window";
-import { useFavoritesState } from "@/atoms/market/favorites";
+import { useFavoritesState } from "@/atoms/market/favorites-atom";
 import { convertMillion, formatPriceByTickSizeLength } from "@/lib/utils";
 import { Button } from "@/components/ui";
 import { Star } from "lucide-react";
