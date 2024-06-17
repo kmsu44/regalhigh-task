@@ -52,3 +52,35 @@ export const MARKET_TAB_LIST = [
     value: "ALL",
   },
 ];
+export const ORDER_TAB_LIST = [
+  {
+    name: "spot",
+    value: "spot",
+  },
+  {
+    name: "cross",
+    value: "cross",
+  },
+  {
+    name: "isolated",
+    value: "isolated",
+  },
+  {
+    name: "grid",
+    value: "grid",
+  },
+];
+export const ORDER_SUB_TAB_LIST: OrderSubTabValue[] = [
+  {
+    name: "Limit",
+    value: "limit",
+  },
+  {
+    name: "Market",
+    value: "market",
+  },
+  {
+    name: "Stop-limit",
+    value: "stop-limit",
+  },
+];

@@ -95,3 +95,17 @@ interface OrderBookData {
   bids: string[][];
   asks: string[][];
 }
+
+interface OrderSubTabValue {
+  value: string;
+  name: string;
+}
+interface OrderInput {
+  price: string;
+  amount: string;
+}
+
+interface OrderInputState {
+  sell: OrderInput;
+  buy: OrderInput;
+}

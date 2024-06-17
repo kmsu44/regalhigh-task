@@ -134,3 +134,34 @@ export function getTickSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
     tickSizeLength: removeTrailingZeros(tickSize).split(".")[1].length || 2,
   };
 }
+export function getLotSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
+  // @ts-ignore
+  const lotSize = symbol.filters.find(
+    // @ts-ignore
+    (filter) => filter.filterType === "LOT_SIZE"
+  ).stepSize;
+
+  return {
+    lotSize,
+    lotSizeLength: removeTrailingZeros(lotSize).split(".")[1].length || 2,
+  };
+}
+
+export function getValidateOrderInput(
+  value: string,
+  tickSizeLength: number
+): string {
+  if (!/^\d*\.?\d*$/.test(value)) return "";
+  if (value === ".") return "";
+  if (value === "0") return "";
+
+  let newValue = value;
+  if (newValue.includes(".")) {
+    let [integer, decimal] = newValue.split(".");
+    if (decimal.length > tickSizeLength) {
+      newValue = `${integer}.${decimal.slice(0, tickSizeLength)}`;
+    }
+  }
+
+  return newValue;
+}

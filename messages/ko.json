@@ -31,5 +31,19 @@
     "total": "총액",
     "sell_order": "매도 주문",
     "buy_order": "매수 주문"
+  },
+  "order": {
+    "spot": "현물",
+    "cross": "교차 마진",
+    "isolated": "격리 마진",
+    "grid": "그리드",
+    "limit": "지정가",
+    "market": "시장가",
+    "stop-limit": "스톱-지정가",
+    "avbl": "자산",
+    "price": "가격",
+    "amount": "수량",
+    "buy": "구매",
+    "sell": "판매"
   }
 }

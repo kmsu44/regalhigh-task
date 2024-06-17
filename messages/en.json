@@ -31,5 +31,19 @@
     "amount": "Amount",
     "sell_order": "Sell Order",
     "buy_order": "Buy Order"
+  },
+  "order": {
+    "spot": "Spot",
+    "cross": "Cross",
+    "isolated": "Isolated",
+    "grid": "Grid",
+    "limit": "Limit",
+    "market": "Market",
+    "stop-limit": "Stop-limit",
+    "avbl": "Avbl",
+    "price": "Price",
+    "amount": "Amount",
+    "buy": "Buy",
+    "sell": "Sell"
   }
 }
