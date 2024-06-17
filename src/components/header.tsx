@@ -18,7 +18,7 @@ export default function Header() {
     { name: t("more"), href: "/", isExpand: true },
   ];
   return (
-    <header className="flex h-16 justify-between items-center px-6 bg-background">
+    <header className="flex h-16 justify-between items-center px-6 bg-background border-b-2">
       <div className="flex gap-6 items-center">
         <Logo />
         <div className="hidden lg:flex">
