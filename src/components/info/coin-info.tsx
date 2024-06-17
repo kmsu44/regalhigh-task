@@ -1,14 +1,20 @@
 "use client";
 
+import clsx from "clsx";
+import { ArrowDown, ArrowUp } from "lucide-react";
+import { Suspense } from "react";
+import { useKlineIntervalState } from "@/atoms/klines/kline-interval-atom";
+import SymbolChart from "@/components/chart/symbol-chart";
 import InfoHeader from "@/components/info/info-header";
 import OrderBook from "@/components/order-book/order-book";
 import Order from "@/components/order/order";
+import { Tabs, TabsList, TabsTrigger } from "@/components/ui";
 import useConvertUsd from "@/hooks/use-convert-usd";
 import { symbolsOptions, tickersOptions } from "@/lib/query-options";
 import { formatNumberWithCommas } from "@/lib/utils";
+import { Interval } from "@binance/connector-typescript";
 import { useSuspenseQuery } from "@tanstack/react-query";
-import clsx from "clsx";
-import { ArrowDown, ArrowUp } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
 
 export default function CoinInfo({ symbol }: { symbol: string }) {
   const { data: coin } = useSuspenseQuery({
@@ -25,6 +31,8 @@ export default function CoinInfo({ symbol }: { symbol: string }) {
     price: ticker?.lastPrice || "0",
     baseAsset: coin?.baseAsset || "",
   });
+  const [klineInterval, setKlineInterval] = useKlineIntervalState();
+
   if (!coin || !ticker) return null;
   return (
     <div className="flex flex-col w-full h-full">
@@ -50,10 +58,26 @@ export default function CoinInfo({ symbol }: { symbol: string }) {
             </p>
           </div>
         </OrderBook>
-        <div className="flex flex-col w-full bg-yellow-300 justify-between">
-          <div className="h-[42px] bg-yellow-400">tab1</div>
-          <div className="h-10 bg-yellow-500">tab2</div>
-          <div className="h-[440px] bg-yellow-600">chart</div>
+        <div className="flex flex-col w-full justify-between">
+          <Tabs
+            className="h-[42px]"
+            value={klineInterval}
+            onValueChange={(value) => {
+              setKlineInterval(value as Interval);
+            }}
+          >
+            <TabsList>
+              <TabsTrigger value="1s">1s</TabsTrigger>
+              <TabsTrigger value="15m">15m</TabsTrigger>
+              <TabsTrigger value="1h">1H</TabsTrigger>
+              <TabsTrigger value="4h">1H</TabsTrigger>
+              <TabsTrigger value="1d">1D</TabsTrigger>
+              <TabsTrigger value="1w">1W</TabsTrigger>
+            </TabsList>
+          </Tabs>
+          <Suspense fallback={<Skeleton className="w-full h-[576px]" />}>
+            <SymbolChart symbol={coin} />
+          </Suspense>
           <Order symbol={coin} />
         </div>
       </div>

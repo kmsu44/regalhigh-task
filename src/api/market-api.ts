@@ -27,17 +27,32 @@ export async function getOrderBook(symbol: string): Promise<OrderBookData> {
   }
   return data.json();
 }
-export async function getKlines(symbol: string, interval: Interval) {
-  const res = await fetch(
-    `${BASE_URL}/api/v3/klines?symbol=${symbol}&interval=${interval}&limit=1000`,
-    {
-      method: "GET",
-    }
-  );
+export async function getKlines(
+  symbol: string,
+  interval: Interval,
+  startTime?: number,
+  endTime?: number
+) {
+  const url = `${BASE_URL}/api/v3/klines`;
+  const params = new URLSearchParams({
+    symbol,
+    interval,
+    limit: "1000",
+  });
+  if (startTime) {
+    params.set("startTime", startTime.toString());
+  }
+  if (endTime) {
+    params.set("endTime", endTime.toString());
+  }
+  const res = await fetch(`${url}?${params.toString()}`, {
+    method: "GET",
+  });
+
   if (!res.ok) {
     throw new Error("Failed to fetch klines");
   }
-  const data = await res.json();
+  const data = (await res.json()) as KLineData[];
   const klines = data.map((item) => ({
     timestamp: item[0],
     open: item[1],
