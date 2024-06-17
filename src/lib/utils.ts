@@ -29,10 +29,11 @@ export function getTableData({
     return {
       symbol: symbol.symbol,
       pair: String(symbol.baseAsset + "/" + symbol.quoteAsset),
-      price: price,
+      price: parseFloat(ticker?.lastPrice || "0"),
       priceChange: parseFloat(ticker?.priceChangePercent || "0"),
       volume: volume || 0,
       isRise: ticker?.isRise,
+      tickSizeLength: getTickSizeBySymbol({ symbol }).tickSizeLength,
     };
   });
   if (searchTerm) {
@@ -96,4 +97,40 @@ export function formatNumberWithCommas(value: number | string) {
     return parts[0];
   }
   return parts.join(".");
+}
+
+export function formatPriceBySymbol({
+  symbol,
+  price,
+}: {
+  symbol: ExchangeInfo;
+  price: number;
+}) {
+  const { tickSizeLength } = getTickSizeBySymbol({ symbol });
+  return price.toFixed(tickSizeLength);
+}
+export function formatPriceByTickSizeLength({
+  tickSizeLength,
+  price,
+}: {
+  tickSizeLength: number;
+  price: number;
+}) {
+  return price.toFixed(tickSizeLength);
+}
+
+export function removeTrailingZeros(num: number) {
+  return num.toString().replace(/0+$/, "");
+}
+export function getTickSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
+  // @ts-ignore
+  const tickSize = symbol.filters.find(
+    // @ts-ignore
+    (filter) => filter.filterType === "PRICE_FILTER"
+  ).tickSize;
+
+  return {
+    tickSize,
+    tickSizeLength: removeTrailingZeros(tickSize).split(".")[1].length || 2,
+  };
 }
