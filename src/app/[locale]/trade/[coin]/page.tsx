@@ -1,7 +1,11 @@
 import { HydrationBoundary, dehydrate } from "@tanstack/react-query";
 import Market from "@/components/market/market";
 import { getQueryClient } from "@/lib/get-query-client";
-import { symbolsOptions, tickersOptions } from "@/lib/query-options";
+import {
+  klinesOptions,
+  symbolsOptions,
+  tickersOptions,
+} from "@/lib/query-options";
 import CoinInfo from "@/components/info/coin-info";
 import { redirect } from "next/navigation";
 
@@ -23,6 +27,12 @@ export default async function Page({
     })?.symbol;
   if (!symbol) return redirect("/404");
   void queryClient.prefetchQuery(tickersOptions);
+  void queryClient.prefetchQuery(
+    klinesOptions({
+      symbol: params.coin.toUpperCase(),
+      interval: "1d",
+    })
+  );
 
   return (
     <div className="flex bg-background w-full">
