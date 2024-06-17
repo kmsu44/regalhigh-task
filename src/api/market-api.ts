@@ -13,3 +13,13 @@ export async function getSymbols() {
   const symbols = data.filter((item) => item.status === "TRADING");
   return symbols;
 }
+
+export async function getOrderBook(symbol: string) {
+  const data = await fetch(
+    `${BASE_URL}/api/v3/depth?symbol=${symbol}&limit=1000`,
+    {
+      method: "GET",
+    }
+  );
+  return data.json();
+}
