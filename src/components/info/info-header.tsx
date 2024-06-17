@@ -1,10 +1,10 @@
-import { useFavoritesState } from "@/atoms/market/favorites";
-import { Button } from "@/components/ui";
-import useConvertUsd from "@/hooks/use-convert-usd";
-import { formatNumberWithCommas } from "@/lib/utils";
 import clsx from "clsx";
 import { Star } from "lucide-react";
 import { useTranslations } from "next-intl";
+import { useFavoritesState } from "@/atoms/market/favorites";
+import { Button } from "@/components/ui";
+import useConvertUsd from "@/hooks/use-convert-usd";
+import { formatNumberWithCommas, formatPriceBySymbol } from "@/lib/utils";
 
 interface InfoHeaderProps {
   coin: ExchangeInfo;
@@ -56,7 +56,10 @@ export default function InfoHeader({ coin, ticker }: InfoHeaderProps) {
                 "text-red-500": !ticker.isRise,
               })}
             >
-              {formatNumberWithCommas(ticker.lastPrice)}
+              {formatPriceBySymbol({
+                symbol: coin,
+                price: parseFloat(ticker.lastPrice),
+              })}
             </p>
             <p className="text-xs text-primary">
               ${formatNumberWithCommas(usdPrice)}

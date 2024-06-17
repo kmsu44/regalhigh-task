@@ -1,6 +1,4 @@
 import { getQueryClient } from "@/lib/get-query-client";
-import { symbolsOptions, tickersOptions } from "@/lib/query-options";
-import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useEffect } from "react";
 const SOCKET_URL = process.env.NEXT_PUBLIC_SOCKET || "";
 export default function useTickerSubscription() {

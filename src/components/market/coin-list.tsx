@@ -5,7 +5,7 @@ import Link from "next/link";
 import clsx from "clsx";
 import { FixedSizeList as List } from "react-window";
 import { useFavoritesState } from "@/atoms/market/favorites";
-import { convertMillion, formatNumberWithCommas } from "@/lib/utils";
+import { convertMillion, formatPriceByTickSizeLength } from "@/lib/utils";
 import { Button } from "@/components/ui";
 import { Star } from "lucide-react";
 
@@ -70,7 +70,10 @@ export default function CoinList({
                 "text-red-500": data[index].isRise === false,
               })}
             >
-              {formatNumberWithCommas(data[index].price)}
+              {formatPriceByTickSizeLength({
+                tickSizeLength: data[index].tickSizeLength,
+                price: data[index].price,
+              })}
             </span>
             {radio === "change" ? (
               <span

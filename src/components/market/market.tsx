@@ -6,7 +6,7 @@ import { Input, Tabs, TabsList, TabsTrigger } from "@/components/ui";
 import { MARKET_TAB_LIST } from "@/constants/tab-list";
 import { useSuspenseQuery } from "@tanstack/react-query";
 import { useFavoritesState } from "@/atoms/market/favorites";
-import { useMarketRadioState } from "@/atoms/market/raido";
+import { useMarketRadioState } from "@/atoms/market/radio";
 import { symbolsOptions, tickersOptions } from "@/lib/query-options";
 import { useMarketTabState } from "@/atoms/market/tab-atom";
 import useTickerSubscription from "@/hooks/use-ticker-subscription";
@@ -26,7 +26,7 @@ export default function Market() {
   const { data: tickers } = useSuspenseQuery(tickersOptions) as {
     data: Ticker[];
   };
-  const k = useTickerSubscription();
+  const c = useTickerSubscription();
   const filteredSymbolsByInput = symbols.filter((symbol) =>
     symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
   );
@@ -40,6 +40,7 @@ export default function Market() {
     return symbol.quoteAsset === marketTab;
   });
   const tableData = getTableData({
+    //@ts-ignore
     symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
     tickers,
     sortValue: marketSort,
