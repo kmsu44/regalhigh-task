@@ -33,7 +33,7 @@ function useOrderInputAtom() {
     }));
   };
 
-  return { data, updateData };
+  return { data, setData, updateData };
 }
 
 export { orderInputAtom, useOrderInputAtom };

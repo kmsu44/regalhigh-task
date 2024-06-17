@@ -1,13 +1,14 @@
+import { useTranslations } from "next-intl";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { getValidateOrderInput } from "@/lib/utils";
-import { useTranslations } from "next-intl";
 
 interface OrderInputBoxProps {
   baseAsset: string;
   quoteAsset: string;
   type: "buy" | "sell";
   orderInput: OrderInputState;
+  lotSizeLength: number;
   tickSizeLength: number;
   updateData: (
     type: "sell" | "buy",
@@ -21,6 +22,7 @@ export default function OrderInputBox({
   type,
   orderInput,
   tickSizeLength,
+  lotSizeLength,
   updateData,
 }: OrderInputBoxProps) {
   const t = useTranslations("order");
@@ -28,6 +30,11 @@ export default function OrderInputBox({
     const newValue = getValidateOrderInput(e.target.value, tickSizeLength);
     if (newValue === null) return;
     updateData(type, "price", newValue);
+  };
+  const onChangeAmount = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const newValue = getValidateOrderInput(e.target.value, lotSizeLength);
+    if (newValue === null) return;
+    updateData(type, "amount", newValue);
   };
   return (
     <div className="flex flex-col w-full">
@@ -52,7 +59,7 @@ export default function OrderInputBox({
       <div className="flex gap-2 items-center mb-2">
         <Input
           value={orderInput[type].amount}
-          onChange={onChangePrice}
+          onChange={onChangeAmount}
           className="text-right w-full "
         />
       </div>

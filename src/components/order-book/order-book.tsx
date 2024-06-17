@@ -1,10 +1,16 @@
 "use client";
 
+import clsx from "clsx";
+import { ChevronDown, Ellipsis } from "lucide-react";
+import { useTranslations } from "next-intl";
+import { useEffect, useRef, useState } from "react";
+import { FixedSizeList as List } from "react-window";
 import {
   BuyBookIcon,
   OrderBookIcon,
   SellBookIcon,
 } from "@/assets/icons/order-book-icon";
+import { useOrderInputAtom } from "@/atoms/order/order-input-atom";
 import { Button } from "@/components/ui";
 import { ORDER_BOOK_LAYOUT } from "@/constants/order-book-layout";
 import useOrderBookSubscription from "@/hooks/use-order-book-subscription";
@@ -12,13 +18,11 @@ import useOrderBookSubscription from "@/hooks/use-order-book-subscription";
 import {
   formatNumberWithCommas,
   formatPriceBySymbol,
+  formatPriceByTickSizeLength,
+  getLotSizeBySymbol,
+  getSumOfAmountArrayByOrderBook,
   getTickSizeBySymbol,
 } from "@/lib/utils";
-import clsx from "clsx";
-import { ChevronDown, Ellipsis } from "lucide-react";
-import { useTranslations } from "next-intl";
-import { useEffect, useRef, useState } from "react";
-import { FixedSizeList as List } from "react-window";
 export default function OrderBook({
   symbol,
   children,
@@ -30,6 +34,8 @@ export default function OrderBook({
   const t = useTranslations("orderBook");
   const [layoutOption, setLayoutOption] = useState<OrderBookLayout>("order");
   const { tickSize, tickSizeLength } = getTickSizeBySymbol({ symbol });
+  const { lotSizeLength } = getLotSizeBySymbol({ symbol });
+  const { setData: setOrderInput } = useOrderInputAtom();
   const askRef = useRef(null);
   const bidRef = useRef(null);
   const asks = Array.from(data.asks)
@@ -37,16 +43,14 @@ export default function OrderBook({
       return parseFloat(b[0]) - parseFloat(a[0]);
     })
     .map((ask) => {
-      let price = formatPriceBySymbol({
-        symbol: symbol,
-        price: parseFloat(ask[1][0]),
-      });
-      let amount = formatNumberWithCommas(parseFloat(ask[1][1]));
-      let total = formatNumberWithCommas(
-        parseFloat(price) * parseFloat(amount)
-      );
+      let price = parseFloat(ask[1][0]);
+      let amount = parseFloat(ask[1][1]);
+      let total = formatNumberWithCommas(price * amount);
       return {
-        price: price,
+        price: formatPriceBySymbol({
+          symbol: symbol,
+          price: parseFloat(ask[1][0]),
+        }),
         amount: amount,
         total: total,
       };
@@ -56,20 +60,59 @@ export default function OrderBook({
       return parseFloat(b[0]) - parseFloat(a[0]);
     })
     .map((bid) => {
-      let price = formatPriceBySymbol({
-        symbol: symbol,
-        price: parseFloat(bid[1][0]),
-      });
-      let amount = formatNumberWithCommas(parseFloat(bid[1][1]));
-      let total = formatNumberWithCommas(
-        parseFloat(price) * parseFloat(amount)
-      );
+      let price = parseFloat(bid[1][0]);
+      let amount = parseFloat(bid[1][1]);
+      let total = formatNumberWithCommas(price * amount);
       return {
-        price: price,
+        price: formatPriceBySymbol({
+          symbol: symbol,
+          price: parseFloat(bid[1][0]),
+        }),
         amount: amount,
         total: total,
       };
     });
+
+  const asksSumAmountArray = getSumOfAmountArrayByOrderBook(
+    [...asks].reverse()
+  );
+  const bidsSumAmountArray = getSumOfAmountArrayByOrderBook(bids);
+  const handleRowClick = (
+    type: "sell" | "buy",
+    price: string,
+    amount: number
+  ) => {
+    if (type === "buy") {
+      setOrderInput({
+        buy: {
+          price: price,
+          amount: "",
+        },
+        sell: {
+          price: price,
+          amount: formatPriceByTickSizeLength({
+            price: amount,
+            tickSizeLength: lotSizeLength,
+          }),
+        },
+      });
+    } else {
+      setOrderInput({
+        buy: {
+          price: price,
+          amount: formatPriceByTickSizeLength({
+            price: amount,
+            tickSizeLength: lotSizeLength,
+          }),
+        },
+        sell: {
+          price: price,
+          amount: "",
+        },
+      });
+    }
+  };
+
   useEffect(() => {
     if (layoutOption === "order") {
       //@ts-ignore
@@ -78,6 +121,7 @@ export default function OrderBook({
       bidRef.current?.scrollToItem(0);
     }
   }, [data]);
+
   return (
     <div className="flex flex-col w-80 flex-shrink-0 border-2 border-secondary px-4">
       <div className="flex h-[42px] justify-between items-center pt-1">
@@ -126,7 +170,7 @@ export default function OrderBook({
           {t("price")}({symbol.quoteAsset})
         </p>
         <p className="text-xs text-muted-foreground">
-          {t("amount")}({symbol.quoteAsset})
+          {t("amount")}({symbol.baseAsset})
         </p>
         <p className="text-xs text-muted-foreground">{t("total")}</p>
       </div>
@@ -142,10 +186,23 @@ export default function OrderBook({
       >
         {({ index, style }) => {
           return (
-            <div style={style} className="flex justify-between">
-              <p className="text-xs text-red-500 w-24">{asks[index].price}</p>
-              <p className="text-xs text-right w-24">{asks[index].amount}</p>
-              <p className="text-xs text-right w-24">{asks[index].total}</p>
+            <div style={style}>
+              <button
+                className="flex justify-between w-full"
+                onClick={() => {
+                  handleRowClick(
+                    "sell",
+                    asks[index].price,
+                    asksSumAmountArray[asks.length - index - 1]
+                  );
+                }}
+              >
+                <p className="text-xs text-red-500 w-24 text-left">
+                  {asks[index].price}
+                </p>
+                <p className="text-xs text-right w-24">{asks[index].amount}</p>
+                <p className="text-xs text-right w-24">{asks[index].total}</p>
+              </button>
             </div>
           );
         }}
@@ -163,10 +220,25 @@ export default function OrderBook({
       >
         {({ index, style }) => {
           return (
-            <div style={style} className="flex justify-between">
-              <p className="text-xs text-green-500 w-24">{bids[index].price}</p>
-              <p className="text-xs text-right w-24">{bids[index].amount}</p>
-              <p className="text-xs text-right w-24">{bids[index].total}</p>
+            <div style={style}>
+              <button
+                className="flex justify-between w-full"
+                onClick={() => {
+                  handleRowClick(
+                    "buy",
+                    bids[index].price,
+                    bidsSumAmountArray[index]
+                  );
+                }}
+              >
+                <p className="text-xs text-green-500 w-24 text-left">
+                  {bids[index].price}
+                </p>
+                <p className="text-xs text-right w-24">
+                  {formatNumberWithCommas(bids[index].amount)}
+                </p>
+                <p className="text-xs text-right w-24">{bids[index].total}</p>
+              </button>
             </div>
           );
         }}

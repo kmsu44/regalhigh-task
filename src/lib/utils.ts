@@ -110,8 +110,8 @@ export function formatPriceBySymbol({
   return price.toFixed(tickSizeLength);
 }
 export function formatPriceByTickSizeLength({
-  tickSizeLength,
   price,
+  tickSizeLength,
 }: {
   tickSizeLength: number;
   price: number;
@@ -131,7 +131,7 @@ export function getTickSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
 
   return {
     tickSize,
-    tickSizeLength: removeTrailingZeros(tickSize).split(".")[1].length || 2,
+    tickSizeLength: removeTrailingZeros(tickSize).split(".")[1].length || 0,
   };
 }
 export function getLotSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
@@ -143,7 +143,7 @@ export function getLotSizeBySymbol({ symbol }: { symbol: ExchangeInfo }) {
 
   return {
     lotSize,
-    lotSizeLength: removeTrailingZeros(lotSize).split(".")[1].length || 2,
+    lotSizeLength: removeTrailingZeros(lotSize).split(".")[1].length || 0,
   };
 }
 
@@ -153,7 +153,6 @@ export function getValidateOrderInput(
 ): string {
   if (!/^\d*\.?\d*$/.test(value)) return "";
   if (value === ".") return "";
-  if (value === "0") return "";
 
   let newValue = value;
   if (newValue.includes(".")) {
@@ -162,6 +161,20 @@ export function getValidateOrderInput(
       newValue = `${integer}.${decimal.slice(0, tickSizeLength)}`;
     }
   }
-
   return newValue;
+}
+
+export function getSumOfAmountArrayByOrderBook(
+  arr: {
+    price: string;
+    amount: number;
+    total: string;
+  }[]
+) {
+  let sum = 0;
+  const sumArray = arr.map((data) => {
+    sum += data.amount;
+    return sum;
+  });
+  return sumArray;
 }

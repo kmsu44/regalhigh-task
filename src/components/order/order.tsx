@@ -3,21 +3,16 @@ import clsx from "clsx";
 import { useTranslations } from "next-intl";
 import { usePathname, useRouter, useSearchParams } from "next/navigation";
 import { useOrderInputAtom } from "@/atoms/order/order-input-atom";
-import {
-  Button,
-  Tabs,
-  TabsContent,
-  TabsList,
-  TabsTrigger,
-} from "@/components/ui";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui";
 import OrderInputBox from "@/components/ui/order-input-box";
 import { ORDER_SUB_TAB_LIST, ORDER_TAB_LIST } from "@/constants/tab-list";
-import { getTickSizeBySymbol } from "@/lib/utils";
+import { getLotSizeBySymbol, getTickSizeBySymbol } from "@/lib/utils";
 
 export default function Order({ symbol }: { symbol: ExchangeInfo }) {
   const { replace } = useRouter();
   const t = useTranslations("order");
   const { tickSizeLength } = getTickSizeBySymbol({ symbol });
+  const { lotSizeLength } = getLotSizeBySymbol({ symbol });
   const searchParams = useSearchParams();
   const { data, updateData } = useOrderInputAtom();
   const pathname = usePathname();
@@ -74,6 +69,7 @@ export default function Order({ symbol }: { symbol: ExchangeInfo }) {
                 quoteAsset={symbol.quoteAsset}
                 type="buy"
                 tickSizeLength={tickSizeLength}
+                lotSizeLength={lotSizeLength}
                 orderInput={data}
                 updateData={updateData}
               />
@@ -81,6 +77,7 @@ export default function Order({ symbol }: { symbol: ExchangeInfo }) {
                 baseAsset={symbol.baseAsset}
                 quoteAsset={symbol.quoteAsset}
                 tickSizeLength={tickSizeLength}
+                lotSizeLength={lotSizeLength}
                 type="sell"
                 orderInput={data}
                 updateData={updateData}
