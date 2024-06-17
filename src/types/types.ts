@@ -67,7 +67,12 @@ interface ExchangeInfo {
   permissions: string[];
   defaultSelfTradePreventionMode: string;
   allowedSelfTradePreventionModes: string[];
-  ticker?: Ticker;
+}
+interface PriceFilter {
+  filterType: "PRICE_FILTER";
+  minPrice: string;
+  maxPrice: string;
+  tickSize: string;
 }
 
 interface SortValue {
@@ -81,4 +86,12 @@ interface MarketTable {
   priceChange: number;
   volume: number;
   isRise?: boolean | null;
+  tickSizeLength: number;
+}
+type OrderBookLayout = "order" | "sell" | "buy";
+
+interface OrderBookData {
+  lastUpdateId: number;
+  bids: string[][];
+  asks: string[][];
 }

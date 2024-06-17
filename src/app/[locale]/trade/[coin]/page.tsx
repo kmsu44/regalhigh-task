@@ -3,8 +3,9 @@ import Market from "@/components/market/market";
 import { getQueryClient } from "@/lib/get-query-client";
 import { symbolsOptions, tickersOptions } from "@/lib/query-options";
 import CoinInfo from "@/components/info/coin-info";
+import { redirect } from "next/navigation";
 
-export default function Page({
+export default async function Page({
   params,
 }: {
   params: {
@@ -13,12 +14,20 @@ export default function Page({
   };
 }) {
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(symbolsOptions);
+  await queryClient.prefetchQuery(symbolsOptions);
+  const symbol = queryClient
+    .getQueryData(["symbols"])
+    // @ts-ignore
+    ?.find((coin: ExchangeInfo) => {
+      return coin.symbol === params.coin.toUpperCase();
+    })?.symbol;
+  if (!symbol) return redirect("/404");
   void queryClient.prefetchQuery(tickersOptions);
+
   return (
     <div className="flex bg-background w-full">
       <HydrationBoundary state={dehydrate(queryClient)}>
-        <CoinInfo symbol={params.coin} />
+        <CoinInfo symbol={params.coin.toUpperCase()} />
         <div className="h-[357px] max-w-80 flex-shrink-0">
           <Market />
           <div>트레이드</div>

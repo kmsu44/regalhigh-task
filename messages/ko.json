@@ -17,5 +17,19 @@
     "change": "전일대비",
     "volume": "거래량",
     "search": "검색"
+  },
+  "info": {
+    "24h_change": "24H 변동",
+    "24h_high": "24H 최고가",
+    "24h_low": "24H 최저가",
+    "24h_volume": "24H 총 수량"
+  },
+  "orderBook": {
+    "order_book": "호가창",
+    "price": "가격",
+    "amount": "수량",
+    "total": "총액",
+    "sell_order": "매도 주문",
+    "buy_order": "매수 주문"
   }
 }

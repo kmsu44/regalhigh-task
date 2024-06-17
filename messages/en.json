@@ -23,5 +23,13 @@
     "24h_high": "24H High",
     "24h_low": "24H Low",
     "24h_volume": "24H Volume"
+  },
+  "orderBook": {
+    "order_book": "Order Book",
+    "price": "Price",
+    "total": "Total",
+    "amount": "Amount",
+    "sell_order": "Sell Order",
+    "buy_order": "Buy Order"
   }
 }
