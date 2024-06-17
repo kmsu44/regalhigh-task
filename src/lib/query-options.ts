@@ -18,10 +18,10 @@ export const klinesOptions = ({
   interval,
 }: {
   symbol: string;
-  interval: string;
+  interval: Interval;
 }) => {
   return queryOptions({
-    queryKey: ["klines", symbol, interval],
+    queryKey: ["klines", symbol, Interval[interval as keyof typeof Interval]],
     queryFn: () =>
       getKlines(symbol, Interval[interval as keyof typeof Interval]),
     staleTime: Infinity,
