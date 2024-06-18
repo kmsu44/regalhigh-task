@@ -1,13 +1,16 @@
-import { getLocale } from "next-intl/server";
-import Link from "next/link";
-import { usePathname } from "next/navigation";
+import { unstable_setRequestLocale } from "next-intl/server";
 
-export default async function Page() {
-  const locale = await getLocale();
+export default async function Page({
+  params: { locale },
+}: {
+  params: {
+    locale: string;
+  };
+}) {
+  unstable_setRequestLocale(locale);
   return (
     <main>
       <h1>page</h1>
-      <Link href={`${locale}/trade/btcusdt`} />
     </main>
   );
 }
