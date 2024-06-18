@@ -70,7 +70,7 @@ export default function CoinInfo({ symbol }: { symbol: string }) {
               <TabsTrigger value="1s">1s</TabsTrigger>
               <TabsTrigger value="15m">15m</TabsTrigger>
               <TabsTrigger value="1h">1H</TabsTrigger>
-              <TabsTrigger value="4h">1H</TabsTrigger>
+              <TabsTrigger value="4h">4H</TabsTrigger>
               <TabsTrigger value="1d">1D</TabsTrigger>
               <TabsTrigger value="1w">1W</TabsTrigger>
             </TabsList>
