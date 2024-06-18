@@ -3,14 +3,17 @@ import Market from "@/components/market/market";
 import { getQueryClient } from "@/lib/get-query-client";
 import { symbolsOptions, tickersOptions } from "@/lib/query-options";
 import CoinInfo from "@/components/info/coin-info";
+import { unstable_setRequestLocale } from "next-intl/server";
 
 export default async function Page({
   params,
 }: {
   params: {
+    locale: string;
     coin: string;
   };
 }) {
+  unstable_setRequestLocale(params.locale);
   const symbol = params.coin.toUpperCase();
   const queryClient = getQueryClient();
   void queryClient.prefetchQuery(symbolsOptions);
