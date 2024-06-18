@@ -23,13 +23,9 @@ export default function Market() {
   const [marketSort, setMarketSort] = useMarketSortState();
   const [favorites] = useFavoritesState();
   const [inputValue, setInputValue] = useState("");
-  const { data: symbols } = useQuery(symbolsOptions);
-  const { data: tickers } = useQuery(tickersOptions) as {
-    data: Ticker[];
-  };
-  if (!symbols || !tickers) {
-    return null;
-  }
+  const { data: symbols } = useSuspenseQuery(symbolsOptions);
+  const { data: tickers } = useSuspenseQuery(tickersOptions);
+
   // const c = useTickerSubscription();
 
   const filteredSymbolsByInput = symbols.filter((symbol) =>

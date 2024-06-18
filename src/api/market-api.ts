@@ -4,9 +4,15 @@ import { KLineData } from "klinecharts";
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
 const client = new Spot("", "", { baseURL: BASE_URL });
 
-export async function getTickers() {
-  const data = (await client.ticker24hr()) as Ticker[];
-  return data;
+export async function getTickers(): Promise<Ticker[]> {
+  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr`, {
+    method: "GET",
+    cache: "no-cache",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch tickers");
+  }
+  return res.json();
 }
 
 export async function getSymbols(): Promise<ExchangeInfo[]> {
