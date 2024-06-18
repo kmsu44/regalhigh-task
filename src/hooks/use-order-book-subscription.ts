@@ -20,13 +20,14 @@ export default function useOrderBookSubscription({
     const getOrderBookData = async () => {
       const newOrderBook = await getOrderBook(symbol);
       const newEventBuffer = { ...eventBuffer };
-      newOrderBook.asks.forEach((ask: [string, string]) => {
+
+      newOrderBook.asks.forEach((ask: string[]) => {
         if (ask[1] === "0.00000000") {
           newEventBuffer.asks.delete(ask[0]);
         }
         newEventBuffer.asks.set(ask[0], [ask[0], ask[1]]);
       });
-      newOrderBook.bids.forEach((bid: [string, string]) => {
+      newOrderBook.bids.forEach((bid: string[]) => {
         if (bid[1] === "0.00000000") {
           newEventBuffer.bids.delete(bid[0]);
         }
