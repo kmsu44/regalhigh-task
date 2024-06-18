@@ -8,7 +8,7 @@ import ReactQueryProviders from "@/providers/react-query-providers";
 import RecoilRootWrapper from "@/providers/recoil-wrapper";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
-const locales = ["en", "de"];
+const locales = ["en", "ko"];
 
 export function generateStaticParams() {
   return locales.map((locale) => ({ locale }));
