@@ -13,8 +13,11 @@ export default async function Page({
 }) {
   const symbol = params.coin.toUpperCase();
   const queryClient = getQueryClient();
-  void queryClient.prefetchQuery(symbolsOptions);
-  void queryClient.prefetchQuery(tickersOptions);
+  await Promise.all([
+    queryClient.prefetchQuery(symbolsOptions),
+    queryClient.prefetchQuery(tickersOptions),
+  ]);
+
   return (
     <div className="flex bg-background w-full">
       <HydrationBoundary state={dehydrate(queryClient)}>
