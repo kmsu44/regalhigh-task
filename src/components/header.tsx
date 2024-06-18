@@ -1,5 +1,5 @@
-import Link from "next/link";
 import { useTranslations } from "next-intl";
+import Link from "next/link";
 import ThemeSwitch from "@/components/theme/theme-switch";
 import LocaleSwitch from "@/components/locale-switch";
 import { Button } from "@/components/ui";
@@ -9,18 +9,24 @@ import Logo from "@/assets/icons/logo";
 export default function Header() {
   const t = useTranslations("header");
   const menu = [
-    { name: t("buy_crypto"), href: "/", isExpand: false },
-    { name: t("markets"), href: "/", isExpand: false },
-    { name: t("trade"), href: "/", isExpand: true },
-    { name: t("futures"), href: "/", isExpand: true },
-    { name: t("earn"), href: "/", isExpand: false },
-    { name: t("square"), href: "/", isExpand: true },
-    { name: t("more"), href: "/", isExpand: true },
+    {
+      name: t("buy_crypto"),
+      href: `/$trade`,
+      isExpand: false,
+    },
+    { name: t("markets"), href: `/`, isExpand: false },
+    { name: t("trade"), href: `/trade/BTCUSDT`, isExpand: true },
+    { name: t("futures"), href: `/`, isExpand: true },
+    { name: t("earn"), href: `/`, isExpand: false },
+    { name: t("square"), href: `/`, isExpand: true },
+    { name: t("more"), href: `/`, isExpand: true },
   ];
   return (
     <header className="flex h-16 justify-between items-center px-6 bg-background border-b-2">
       <div className="flex gap-6 items-center">
-        <Logo />
+        <Link href={`/`}>
+          <Logo />
+        </Link>
         <div className="hidden lg:flex">
           {menu.map((item) => {
             return (
