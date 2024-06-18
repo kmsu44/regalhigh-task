@@ -15,7 +15,7 @@ export default async function Page({
 }) {
   const queryClient = getQueryClient();
   await queryClient.prefetchQuery(symbolsOptions);
-  const symbol = queryClient
+  const symbol = await queryClient
     .getQueryData(["symbols"])
     // @ts-ignore
     ?.find((coin: ExchangeInfo) => {
@@ -23,7 +23,6 @@ export default async function Page({
     })?.symbol;
   if (!symbol) return redirect("/404");
   void queryClient.prefetchQuery(tickersOptions);
-
   return (
     <div className="flex bg-background w-full">
       <HydrationBoundary state={dehydrate(queryClient)}>
