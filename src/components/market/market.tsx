@@ -75,7 +75,7 @@ export default function Market() {
 
   return (
     <div className="flex flex-col w-80 h-[420px] py-2 overflow-hidden px-2 border-2 border-secondary rounded">
-      <div className="flex w-full items-center h-10 mb-1">
+      {/* <div className="flex w-full items-center h-10 mb-1">
         <Input
           value={inputValue}
           onChange={handleChange}
@@ -134,8 +134,9 @@ export default function Market() {
             />
           </div>
         </div>
-      </Tabs>
+      </Tabs> */}
       {/* <CoinList data={tableData} radio={radio} /> */}
+      dd
     </div>
   );
 }
