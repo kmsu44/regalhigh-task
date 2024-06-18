@@ -27,8 +27,7 @@ export default function Market() {
   const { data: tickers } = useQuery(tickersOptions) as {
     data: Ticker[];
   };
-
-  const c = useTickerSubscription();
+  // const c = useTickerSubscription();
   if (!symbols || !tickers) {
     return null;
   }
@@ -133,7 +132,7 @@ export default function Market() {
           </div>
         </div>
       </Tabs>
-      {/* <CoinList data={tableData} radio={radio} /> */}
+      <CoinList data={tableData} radio={radio} />
     </div>
   );
 }
