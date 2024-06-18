@@ -26,7 +26,7 @@ export default function Market() {
   const { data: symbols } = useSuspenseQuery(symbolsOptions);
   const { data: tickers } = useSuspenseQuery(tickersOptions);
 
-  // const c = useTickerSubscription();
+  const c = useTickerSubscription();
 
   const filteredSymbolsByInput = symbols.filter((symbol) =>
     symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
