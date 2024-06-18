@@ -16,7 +16,7 @@ export default function Header() {
       isExpand: false,
     },
     { name: t("markets"), href: `/${locale}`, isExpand: false },
-    { name: t("trade"), href: `/${locale}/trade`, isExpand: true },
+    { name: t("trade"), href: `/${locale}/trade/BTCUSDT`, isExpand: true },
     { name: t("futures"), href: `/${locale}`, isExpand: true },
     { name: t("earn"), href: `/${locale}`, isExpand: false },
     { name: t("square"), href: `/${locale}`, isExpand: true },
