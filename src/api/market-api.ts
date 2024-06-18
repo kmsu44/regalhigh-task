@@ -10,8 +10,17 @@ export async function getTickers() {
 }
 
 export async function getSymbols() {
-  const data = (await client.exchangeInformation()).symbols;
-  const symbols = data.filter((item) => item.status === "TRADING");
+  // const data = (await client.exchangeInformation()).symbols;
+  const res = await fetch(`${BASE_URL}/api/v3/exchangeInfo`, {
+    method: "GET",
+    cache: "no-cache",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch symbols");
+  }
+  const data = await res.json();
+  //@ts-ignore
+  const symbols = data.symbols.filter((item) => item.status === "TRADING");
   return symbols;
 }
 
