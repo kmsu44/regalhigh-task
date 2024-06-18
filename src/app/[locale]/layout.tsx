@@ -2,12 +2,17 @@ import { Inter } from "next/font/google";
 import type { Metadata } from "next";
 import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
-import "../globals.css";
+import "../../../globals.css";
 import Header from "@/components/header";
 import ReactQueryProviders from "@/providers/react-query-providers";
 import RecoilRootWrapper from "@/providers/recoil-wrapper";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
+const locales = ["en", "de"];
+
+export function generateStaticParams() {
+  return locales.map((locale) => ({ locale }));
+}
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "regal-task",
