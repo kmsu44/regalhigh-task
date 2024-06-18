@@ -4,7 +4,7 @@ import { useState } from "react";
 import { useTranslations } from "next-intl";
 import { Input, Tabs, TabsList, TabsTrigger } from "@/components/ui";
 import { MARKET_TAB_LIST } from "@/constants/tab-list";
-import { useSuspenseQuery } from "@tanstack/react-query";
+import { useQuery, useSuspenseQuery } from "@tanstack/react-query";
 import { useFavoritesState } from "@/atoms/market/favorites-atom";
 import { useMarketRadioState } from "@/atoms/market/radio-atom";
 import { symbolsOptions, tickersOptions } from "@/lib/query-options";
@@ -23,30 +23,34 @@ export default function Market() {
   const [marketSort, setMarketSort] = useMarketSortState();
   const [favorites] = useFavoritesState();
   const [inputValue, setInputValue] = useState("");
-  // const { data: symbols } = useSuspenseQuery(symbolsOptions);
-  // const { data: tickers } = useSuspenseQuery(tickersOptions) as {
-  //   data: Ticker[];
-  // };
-  // const c = useTickerSubscription();
-  // const filteredSymbolsByInput = symbols.filter((symbol) =>
-  //   symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
-  // );
-  // const filteredSymbolsByTab = symbols.filter((symbol) => {
-  //   if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
-  //     return symbol.symbol;
-  //   }
-  //   if (marketTab === "ALL") {
-  //     return symbol.symbol;
-  //   }
-  //   return symbol.quoteAsset === marketTab;
-  // });
-  // const tableData = getTableData({
-  //   //@ts-ignore
-  //   symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
-  //   tickers,
-  //   sortValue: marketSort,
-  //   searchTerm: inputValue,
-  // });
+  const { data: symbols } = useQuery(symbolsOptions);
+  const { data: tickers } = useQuery(tickersOptions) as {
+    data: Ticker[];
+  };
+
+  const c = useTickerSubscription();
+  if (!symbols || !tickers) {
+    return null;
+  }
+  const filteredSymbolsByInput = symbols.filter((symbol) =>
+    symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
+  );
+  const filteredSymbolsByTab = symbols.filter((symbol) => {
+    if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
+      return symbol.symbol;
+    }
+    if (marketTab === "ALL") {
+      return symbol.symbol;
+    }
+    return symbol.quoteAsset === marketTab;
+  });
+  const tableData = getTableData({
+    //@ts-ignore
+    symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
+    tickers,
+    sortValue: marketSort,
+    searchTerm: inputValue,
+  });
   const handleSort = (value: "price" | "change" | "volume" | "pair") => {
     if (marketSort.sortValue === value) {
       setMarketSort({
