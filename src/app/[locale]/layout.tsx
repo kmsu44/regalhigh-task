@@ -1,6 +1,6 @@
 import { Inter } from "next/font/google";
 import type { Metadata } from "next";
-import { getMessages } from "next-intl/server";
+import { getMessages, unstable_setRequestLocale } from "next-intl/server";
 import { NextIntlClientProvider } from "next-intl";
 import "../globals.css";
 import Header from "@/components/header";
@@ -9,7 +9,6 @@ import RecoilRootWrapper from "@/providers/recoil-wrapper";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
 const inter = Inter({ subsets: ["latin"] });
-
 export const metadata: Metadata = {
   title: "regal-task",
 };
@@ -23,19 +22,19 @@ export default async function RootLayout({
 }>) {
   const messages = await getMessages();
   return (
-    <html lang={locale} suppressHydrationWarning>
+    <html lang={locale}>
       <head />
       <body className={inter.className}>
-        <ReactQueryProviders>
-          <RecoilRootWrapper>
-            <NextIntlClientProvider messages={messages}>
+        <NextIntlClientProvider messages={messages}>
+          <ReactQueryProviders>
+            <RecoilRootWrapper>
               <ThemeProvider attribute="class" defaultTheme="system">
                 <Header />
                 {children}
               </ThemeProvider>
-            </NextIntlClientProvider>
-          </RecoilRootWrapper>
-        </ReactQueryProviders>
+            </RecoilRootWrapper>
+          </ReactQueryProviders>
+        </NextIntlClientProvider>
       </body>
     </html>
   );
