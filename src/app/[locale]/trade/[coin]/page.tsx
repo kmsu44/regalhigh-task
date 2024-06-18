@@ -13,7 +13,7 @@ export default async function Page({
 }) {
   const symbol = params.coin.toUpperCase();
   const queryClient = getQueryClient();
-  await queryClient.prefetchQuery(symbolsOptions);
+  void queryClient.prefetchQuery(symbolsOptions);
   void queryClient.prefetchQuery(tickersOptions);
   return (
     <div className="flex bg-background w-full">
