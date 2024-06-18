@@ -17,35 +17,36 @@ import { ArrowLeftRight, ArrowUpDown } from "lucide-react";
 
 export default function Market() {
   const t = useTranslations("market");
-  const { data: symbols } = useSuspenseQuery(symbolsOptions);
+
   const [radio, setRadio] = useMarketRadioState();
   const [marketTab, setMarketTab] = useMarketTabState();
   const [marketSort, setMarketSort] = useMarketSortState();
   const [favorites] = useFavoritesState();
   const [inputValue, setInputValue] = useState("");
-  const { data: tickers } = useSuspenseQuery(tickersOptions) as {
-    data: Ticker[];
-  };
-  const c = useTickerSubscription();
-  const filteredSymbolsByInput = symbols.filter((symbol) =>
-    symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
-  );
-  const filteredSymbolsByTab = symbols.filter((symbol) => {
-    if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
-      return symbol.symbol;
-    }
-    if (marketTab === "ALL") {
-      return symbol.symbol;
-    }
-    return symbol.quoteAsset === marketTab;
-  });
-  const tableData = getTableData({
-    //@ts-ignore
-    symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
-    tickers,
-    sortValue: marketSort,
-    searchTerm: inputValue,
-  });
+  // const { data: symbols } = useSuspenseQuery(symbolsOptions);
+  // const { data: tickers } = useSuspenseQuery(tickersOptions) as {
+  //   data: Ticker[];
+  // };
+  // const c = useTickerSubscription();
+  // const filteredSymbolsByInput = symbols.filter((symbol) =>
+  //   symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
+  // );
+  // const filteredSymbolsByTab = symbols.filter((symbol) => {
+  //   if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
+  //     return symbol.symbol;
+  //   }
+  //   if (marketTab === "ALL") {
+  //     return symbol.symbol;
+  //   }
+  //   return symbol.quoteAsset === marketTab;
+  // });
+  // const tableData = getTableData({
+  //   //@ts-ignore
+  //   symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
+  //   tickers,
+  //   sortValue: marketSort,
+  //   searchTerm: inputValue,
+  // });
   const handleSort = (value: "price" | "change" | "volume" | "pair") => {
     if (marketSort.sortValue === value) {
       setMarketSort({
