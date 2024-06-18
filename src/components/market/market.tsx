@@ -24,9 +24,9 @@ export default function Market() {
   const [favorites] = useFavoritesState();
   const [inputValue, setInputValue] = useState("");
   const { data: symbols, isLoading } = useQuery(symbolsOptions);
-  const { data: tickers } = useQuery(tickersOptions) as {
-    data: Ticker[];
-  };
+  // const { data: tickers } = useQuery(tickersOptions) as {
+  //   data: Ticker[];
+  // };
   // const c = useTickerSubscription();
   if (isLoading) {
     return <div>Loading...</div>;
