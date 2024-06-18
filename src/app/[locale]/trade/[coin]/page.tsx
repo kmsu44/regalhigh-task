@@ -21,7 +21,7 @@ export default async function Page({
     ?.find((coin: ExchangeInfo) => {
       return coin.symbol === params.coin.toUpperCase();
     })?.symbol;
-  if (!symbol) return redirect("/404");
+  // if (!symbol) return redirect("/404");
   void queryClient.prefetchQuery(tickersOptions);
 
   return (
@@ -29,7 +29,7 @@ export default async function Page({
       <HydrationBoundary state={dehydrate(queryClient)}>
         <CoinInfo symbol={params.coin.toUpperCase()} />
         <div className="h-[357px] max-w-80 flex-shrink-0">
-          <Market />
+          {/* <Market /> */}
           <div>트레이드</div>
         </div>
       </HydrationBoundary>
