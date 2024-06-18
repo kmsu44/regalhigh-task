@@ -8,8 +8,6 @@ import ReactQueryProviders from "@/providers/react-query-providers";
 import RecoilRootWrapper from "@/providers/recoil-wrapper";
 import { ThemeProvider } from "@/components/theme/theme-provider";
 
-const locales = ["en", "ko"];
-
 const inter = Inter({ subsets: ["latin"] });
 export const metadata: Metadata = {
   title: "regal-task",
