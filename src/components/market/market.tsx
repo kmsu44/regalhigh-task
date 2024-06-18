@@ -23,52 +23,55 @@ export default function Market() {
   const [marketSort, setMarketSort] = useMarketSortState();
   const [favorites] = useFavoritesState();
   const [inputValue, setInputValue] = useState("");
-  const { data: symbols } = useQuery(symbolsOptions);
+  const { data: symbols, isLoading } = useQuery(symbolsOptions);
   const { data: tickers } = useQuery(tickersOptions) as {
     data: Ticker[];
   };
   // const c = useTickerSubscription();
-  if (!symbols || !tickers) {
-    return null;
+  if (isLoading) {
+    return <div>Loading...</div>;
   }
-  const filteredSymbolsByInput = symbols.filter((symbol) =>
-    symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
-  );
-  const filteredSymbolsByTab = symbols.filter((symbol) => {
-    if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
-      return symbol.symbol;
-    }
-    if (marketTab === "ALL") {
-      return symbol.symbol;
-    }
-    return symbol.quoteAsset === marketTab;
-  });
-  const tableData = getTableData({
-    //@ts-ignore
-    symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
-    tickers,
-    sortValue: marketSort,
-    searchTerm: inputValue,
-  });
-  const handleSort = (value: "price" | "change" | "volume" | "pair") => {
-    if (marketSort.sortValue === value) {
-      setMarketSort({
-        sortValue: value,
-        sortDirection: marketSort.sortDirection === "asc" ? "desc" : "asc",
-      });
-    } else {
-      setMarketSort({
-        sortValue: value,
-        sortDirection: "asc",
-      });
-    }
-  };
-  const handleRadio = () => {
-    setRadio(radio === "volume" ? "change" : "volume");
-  };
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setInputValue(e.target.value);
-  };
+  if (symbols) {
+    <div>{symbols[0].symbol}</div>;
+  }
+  // const filteredSymbolsByInput = symbols.filter((symbol) =>
+  //   symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
+  // );
+  // const filteredSymbolsByTab = symbols.filter((symbol) => {
+  //   if (marketTab === "favorites" && favorites.includes(symbol.symbol)) {
+  //     return symbol.symbol;
+  //   }
+  //   if (marketTab === "ALL") {
+  //     return symbol.symbol;
+  //   }
+  //   return symbol.quoteAsset === marketTab;
+  // });
+  // const tableData = getTableData({
+  //   //@ts-ignore
+  //   symbols: inputValue === "" ? filteredSymbolsByTab : filteredSymbolsByInput,
+  //   tickers,
+  //   sortValue: marketSort,
+  //   searchTerm: inputValue,
+  // });
+  // const handleSort = (value: "price" | "change" | "volume" | "pair") => {
+  //   if (marketSort.sortValue === value) {
+  //     setMarketSort({
+  //       sortValue: value,
+  //       sortDirection: marketSort.sortDirection === "asc" ? "desc" : "asc",
+  //     });
+  //   } else {
+  //     setMarketSort({
+  //       sortValue: value,
+  //       sortDirection: "asc",
+  //     });
+  //   }
+  // };
+  // const handleRadio = () => {
+  //   setRadio(radio === "volume" ? "change" : "volume");
+  // };
+  // const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+  //   setInputValue(e.target.value);
+  // };
 
   return (
     <div className="flex flex-col w-80 h-[420px] py-2 overflow-hidden px-2 border-2 border-secondary rounded">
