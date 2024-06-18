@@ -32,7 +32,7 @@ export default function Market() {
     return <div>Loading...</div>;
   }
   if (symbols) {
-    <div>{symbols[0].symbol}</div>;
+    return <div>{symbols[0].symbol}</div>;
   }
   // const filteredSymbolsByInput = symbols.filter((symbol) =>
   //   symbol.symbol.toLowerCase().includes(inputValue.toLowerCase())
