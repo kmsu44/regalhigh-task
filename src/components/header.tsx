@@ -11,7 +11,7 @@ export default function Header() {
   const menu = [
     { name: t("buy_crypto"), href: "/", isExpand: false },
     { name: t("markets"), href: "/", isExpand: false },
-    { name: t("trade"), href: "/", isExpand: true },
+    { name: t("trade"), href: "/trade", isExpand: true },
     { name: t("futures"), href: "/", isExpand: true },
     { name: t("earn"), href: "/", isExpand: false },
     { name: t("square"), href: "/", isExpand: true },

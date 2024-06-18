@@ -1,17 +1,30 @@
-import { Interval, Spot } from "@binance/connector-typescript";
+import { Interval } from "@binance/connector-typescript";
 import { KLineData } from "klinecharts";
 
 const BASE_URL = process.env.NEXT_PUBLIC_BASE_URL;
-const client = new Spot("", "", { baseURL: BASE_URL });
 
-export async function getTickers() {
-  const data = (await client.ticker24hr()) as Ticker[];
-  return data;
+export async function getTickers(): Promise<Ticker[]> {
+  const res = await fetch(`${BASE_URL}/api/v3/ticker/24hr`, {
+    method: "GET",
+    cache: "no-cache",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch tickers");
+  }
+  return res.json();
 }
 
-export async function getSymbols() {
-  const data = (await client.exchangeInformation()).symbols;
-  const symbols = data.filter((item) => item.status === "TRADING");
+export async function getSymbols(): Promise<ExchangeInfo[]> {
+  const res = await fetch(`${BASE_URL}/api/v3/exchangeInfo`, {
+    method: "GET",
+    cache: "no-cache",
+  });
+  if (!res.ok) {
+    throw new Error("Failed to fetch symbols");
+  }
+  const data = await res.json();
+  //@ts-ignore
+  const symbols = data.symbols.filter((item) => item.status === "TRADING");
   return symbols;
 }
 
@@ -20,6 +33,7 @@ export async function getOrderBook(symbol: string): Promise<OrderBookData> {
     `${BASE_URL}/api/v3/depth?symbol=${symbol}&limit=1000`,
     {
       method: "GET",
+      cache: "no-cache",
     }
   );
   if (!data.ok) {
@@ -47,6 +61,7 @@ export async function getKlines(
   }
   const res = await fetch(`${url}?${params.toString()}`, {
     method: "GET",
+    cache: "no-cache",
   });
 
   if (!res.ok) {

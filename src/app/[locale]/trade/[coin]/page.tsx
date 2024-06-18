@@ -9,7 +9,6 @@ export default async function Page({
   params,
 }: {
   params: {
-    lang: string;
     coin: string;
   };
 }) {
