@@ -10,7 +10,6 @@ export async function getTickers() {
 }
 
 export async function getSymbols(): Promise<ExchangeInfo[]> {
-  // const data = (await client.exchangeInformation()).symbols;
   const res = await fetch(`${BASE_URL}/api/v3/exchangeInfo`, {
     method: "GET",
     cache: "no-cache",
@@ -29,6 +28,7 @@ export async function getOrderBook(symbol: string): Promise<OrderBookData> {
     `${BASE_URL}/api/v3/depth?symbol=${symbol}&limit=1000`,
     {
       method: "GET",
+      cache: "no-cache",
     }
   );
   if (!data.ok) {
