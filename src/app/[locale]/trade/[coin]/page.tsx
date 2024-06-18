@@ -5,8 +5,7 @@ import { symbolsOptions, tickersOptions } from "@/lib/query-options";
 import CoinInfo from "@/components/info/coin-info";
 import { getSymbols } from "@/api/market-api";
 
-export const dynamicParams = false;
-export async function generateStaticParams() {
+export async function getStaticProps() {
   const coins = await getSymbols();
   return coins.map((coin) => ({
     params: {
