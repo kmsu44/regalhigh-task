@@ -9,7 +9,7 @@ export async function getTickers() {
   return data;
 }
 
-export async function getSymbols() {
+export async function getSymbols(): Promise<ExchangeInfo[]> {
   // const data = (await client.exchangeInformation()).symbols;
   const res = await fetch(`${BASE_URL}/api/v3/exchangeInfo`, {
     method: "GET",
