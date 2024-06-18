@@ -135,7 +135,7 @@ export default function Market() {
           </div>
         </div>
       </Tabs>
-      <CoinList data={tableData} radio={radio} />
+      {/* <CoinList data={tableData} radio={radio} /> */}
     </div>
   );
 }
